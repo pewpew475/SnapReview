@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Base colors - Deep slate foundation */
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
+
+    /* Cards with subtle elevation */
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Primary - Vibrant Cyan/Teal accent */
+    --primary: 186 94% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Deep slate */
+    --secondary: 215 20% 65%;
+    --secondary-foreground: 215 25% 15%;
+
+    /* Muted backgrounds */
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 15% 45%;
+
+    /* Accent - Emerald green for success states */
+    --accent: 156 72% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Warning - Amber */
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    /* Destructive states */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders and inputs */
+    --border: 215 20% 88%;
+    --input: 215 20% 88%;
+    --ring: 186 94% 55%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar */
+    --sidebar-background: 215 25% 15%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 186 94% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 20% 20%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 215 20% 25%;
+    --sidebar-ring: 186 94% 55%;
+
+    /* Custom gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(186 94% 55%), hsl(186 94% 45%));
+    --gradient-success: linear-gradient(135deg, hsl(156 72% 48%), hsl(156 72% 38%));
+    --gradient-hero: linear-gradient(135deg, hsl(215 25% 15%), hsl(215 30% 25%));
+    
+    /* Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(215 25% 15% / 0.08);
+    --shadow-medium: 0 8px 16px -4px hsl(215 25% 15% / 0.12);
+    --shadow-hard: 0 16px 32px -8px hsl(215 25% 15% / 0.16);
+  }
+
+  .dark {
+    /* Base colors - Deep slate background */
+    --background: 215 25% 10%;
+    --foreground: 210 20% 95%;
+
+    /* Cards */
+    --card: 215 25% 12%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 215 25% 12%;
+    --popover-foreground: 210 20% 95%;
+
+    /* Primary - Vibrant Cyan stays bright */
+    --primary: 186 94% 60%;
+    --primary-foreground: 215 25% 10%;
+
+    /* Secondary */
+    --secondary: 215 20% 25%;
+    --secondary-foreground: 210 20% 95%;
+
+    /* Muted */
+    --muted: 215 20% 15%;
+    --muted-foreground: 215 15% 65%;
+
+    /* Accent - Emerald */
+    --accent: 156 72% 52%;
+    --accent-foreground: 215 25% 10%;
+
+    /* Warning - Amber */
+    --warning: 38 92% 55%;
+    --warning-foreground: 215 25% 10%;
+
+    /* Destructive */
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders */
+    --border: 215 20% 20%;
+    --input: 215 20% 20%;
+    --ring: 186 94% 60%;
+
+    /* Sidebar */
+    --sidebar-background: 215 30% 8%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 186 94% 60%;
+    --sidebar-primary-foreground: 215 25% 10%;
+    --sidebar-accent: 215 20% 15%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 215 20% 18%;
+    --sidebar-ring: 186 94% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
