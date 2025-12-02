@@ -7,6 +7,11 @@ import { createError } from '../middleware/errorHandler.js';
 
 export const evaluateRouter = Router();
 
+// Maximum time to wait for a single evaluation before failing (ms)
+// Defaults to 60 seconds, can be overridden via EVALUATION_TIMEOUT_MS env var
+const EVALUATION_TIMEOUT_MS =
+  Number(process.env.EVALUATION_TIMEOUT_MS || '60000');
+
 // POST /api/evaluate - Complete evaluation
 evaluateRouter.post(
   '/',
@@ -156,7 +161,7 @@ evaluateRouter.post(
 
       // Use non-streaming evaluation to send complete code at once
       const { evaluateCodeComplete } = await import('../../lib/ai/evaluator.js');
-      
+
       let evaluationResult;
       try {
         // Check if NVIDIA API key is configured
@@ -173,7 +178,26 @@ evaluateRouter.post(
         })}\n\n`);
 
         // Evaluate with complete code (non-streaming) - sends whole code at once
-        evaluationResult = await evaluateCodeComplete(task);
+        // Add an explicit timeout so the request doesn't run until the Vercel
+        // function hard-times out (300s), which would leave the frontend hanging.
+        const timeoutMs = EVALUATION_TIMEOUT_MS;
+        const timeoutPromise = new Promise<never>((_, reject) => {
+          const timer = setTimeout(() => {
+            clearTimeout(timer);
+            reject(
+              new Error(
+                `Evaluation timed out after ${Math.round(
+                  timeoutMs / 1000,
+                )} seconds. Please try again with a smaller snippet or retry later.`,
+              ),
+            );
+          }, timeoutMs);
+        });
+
+        evaluationResult = await Promise.race([
+          evaluateCodeComplete(task),
+          timeoutPromise,
+        ]);
         
         // Send progress update
         res.write(`data: ${JSON.stringify({ 
