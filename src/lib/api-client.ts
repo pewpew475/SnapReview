@@ -3,7 +3,10 @@
  * Handles all API requests with authentication
  */
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// In production on Vercel we call the backend via the same origin (`/api/...`)
+// and let Vercel proxy to the real backend URL (to avoid CORS).
+// Locally, you can still set VITE_API_URL=http://localhost:3001 in .env.local.
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export interface ApiError {
   error: string;
